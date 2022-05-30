@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>운영관리시스템</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        table th{
+            text-align: center !important;
+        }
+        select {
+            width: 150px;
+            height: 30px;
+            padding-left: 5px;
+            font-size: 15px;
+            color:gray;
+            border: 1px solid gray;
+            border-radius: 3px;
+        }
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="img/stdtitle.jpg">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <th:block th:include="inc/nav"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <th:block th:include="inc/head"></th:block>
+                
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        
+                        <!-- <h1 class="test">증액이력</h1> -->
+                        <div class="card-body">
+                            <h1 class="h3 mb-2 text-gray-800">제한금액 확인을 위한 기업정보 추가</h1>
+                            <hr class="hr1">
+                            <form id="frm"  method="post">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                       <!-- 제한금액 확인을 위한 기업정보 추가 -->
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>그룹코드</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="grp_cd" id="grp_cd" placeholder="반드시 중복확인을 해주세요.(필수)" style="width: 30%; float: left;" onkeyup="chkword2(this,7)">
+                                                    <button type="button" class="btn btn-primary" th:attr="onclick=|idChk()|">중복확인</button>
+                                                    <input type="hidden" id="result" value="N">
+                                                    <!-- <span id="result"></span> -->
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>그룹명</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="grp_nm" id="grp_nm" placeholder="그룹명을 입력해주세요.(필수)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>시작일자</th>
+                                                <td>
+                                                    <input class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" type="text" name="start_date" id="start_date" placeholder="시작일자를 입력해주세요. ex)20220101 (필수)" onkeyup="chkword2(this,8)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>사용현황</th>
+                                                <td>
+                                                    <select name="used_yn">
+                                                        <option value="Y">Y:사용</option>
+                                                        <option value="N">N:미사용</option>
+
+                                                    </select>
+                                                    <!-- <input class="form-control" type="text" name="used_yn" id="used_yn" placeholder="사용현황을 입력해주세요.(필수)"> -->
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>제한금액</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="limit_price" id="limit_price" placeholder="제한금액을 입력해주세요.(필수)"oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onkeyup="chkword2(this,12)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>sms단가</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="sms_price" id="sms_price" placeholder="sms단가를 입력해주세요.(필수)" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>lms단가</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="lms_price" id="lms_price" placeholder="lms단가를 입력해주세요.(필수)" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>mms단가</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="mms_price" id="mms_price" placeholder="mms단가를 입력해주세요.(필수)" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>알람발송그룹분류</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="alarm_group" id="alarm_group" placeholder="알람발송 그룹분류를 입력해주세요.(선택)" onkeyup="chkword2(this,10)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>리셋기능</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="reset_yn" id="reset_yn" placeholder="리셋기능을 입력해주세요.(필수)" onkeyup="chkword2(this,1)">
+                                                </td>
+                                            </tr>
+                                        <tr>
+                                            <th>리셋일자</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="reset_day" id="reset_day" placeholder="리셋일자를 입력해주세요.(필수)" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" onkeyup="chkword2(this,2)">
+                                                </td>
+                                            </tr>
+                                        <tr>
+                                            <th>리셋금액</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="reset_price" id="reset_price" placeholder="리셋금액을 입력해주세요.(필수)" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" onkeyup="chkword2(this,12)">
+                                                </td>
+                                            </tr>
+                                        <tr>
+                                            <th>리셋한날짜이력</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="reset_dttm" id="reset_dttm" placeholder="리셋한날짜이력을 입력해주세요.(필수)" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" onkeyup="chkword2(this,14)">
+                                                </td>
+                                            </tr>
+                                        <tr>
+                                            <th></th>
+                                            <td>
+                                                <button type="button" class="btn btn-primary"  id="btn" th:attr="onclick=|fnInsert()|">SAVE</button>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <th:block th:include="inc/footer"></th:block>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    
+
+</body>
+
+<script th:inline="javascript">
+
+    // // function idCheck(){
+    // //     var idStr = $("#grp_cd").val();
+
+    // //     $.ajax({
+    // //         url: "idCheckServlet?grp_cd="+ idStr,
+    // //         success : function(data){
+    // //             if(data == "success"){
+    // //                 $("#result").text("사용가능한 그룹코드입니다.");
+    // //             }else if(data == "fail"){
+    // //                 $("#result").text("사용중인 그룹코드입니다.");
+    // //             }
+    // //         }
+    // //     });
+    // // }
+
+    function idChk(){
+        const grp_cd = $("#grp_cd").val();
+       
+        $.ajax({
+            "url" : "/idCheck.do",
+            cache : false,
+            type  : 'GET',
+            data  : {
+                grp_cd:grp_cd
+            },
+            success: function(result){
+                if(result.result == "0"){
+                    alert("중복된 그룹코드입니다.");
+                    $("#result").val("N");
+                    console.log("중복...");
+                    $("#grp_cd").focus();
+                    return false;
+                }else{
+                    alert("사용가능한 그룹코드입니다.");
+                    $("#result").val("Y");
+                    console.log("가능....");
+                   $("#grp_nm").focus();
+                    return true;
+                }
+            },
+            error: function(request, status, error){
+                alert("ajax실패");
+                alert("code:" + request.status + "\n"+ "error: " + error);
+            }
+        });
+    }
+
+    function chkword(start_date, maxlength) {     
+        var str = start_date.value; // 이벤트가 일어난 컨트롤의 value 값     
+        var str_length = str.length; // 전체길이       
+        // 변수초기화    
+        var max_length = maxlength; // 제한할 글자수 크기     
+        var i = 0; // for문에 사용     
+        var ko_byte = 0; // 한글일경우는 2 그밗에는 1을 더함    
+        var li_len = 0; // substring하기 위해서 사용     
+        var one_char = ""; // 한글자씩 검사한다     
+        var str2 = ""; // 글자수를 초과하면 제한할수 글자전까지만 보여준다.      
+        for (i = 0; i < str_length; i++) {         
+            // 한글자추출         
+            one_char = str.charAt(i);             
+            ko_byte++;         }           
+            // 전체 크기가 max_length를 넘지않으면         
+            if (ko_byte <= max_length) {             
+                li_len = i + 1;         
+            }            
+            // 전체길이를 초과하면    
+            if (ko_byte > max_length) {         
+                alert(max_length + " 글자 이상 입력할 수 없습니다. \n 초과된 내용은 자동으로 삭제 됩니다. ");
+                str2 = str.substr(0, max_length);     
+                start_date.value = str2;     
+            }     
+            start_date.focus(); 
+            reset_dttm.focus();  
+        }
+
+        function chkword2(reset_dttm, maxlength) {     
+        var str = reset_dttm.value; // 이벤트가 일어난 컨트롤의 value 값     
+        var str_length = str.length; // 전체길이       
+        // 변수초기화    
+        var max_length = maxlength; // 제한할 글자수 크기     
+        var i = 0; // for문에 사용     
+        var ko_byte = 0; // 한글일경우는 2 그밗에는 1을 더함    
+        var li_len = 0; // substring하기 위해서 사용     
+        var one_char = ""; // 한글자씩 검사한다     
+        var str2 = ""; // 글자수를 초과하면 제한할수 글자전까지만 보여준다.       
+        for (i = 0; i < str_length; i++) {         
+            // 한글자추출         
+            one_char = str.charAt(i);             
+            ko_byte++;         }           
+            // 전체 크기가 max_length를 넘지않으면         
+            if (ko_byte <= max_length) {             
+                li_len = i + 1;         
+            }            
+            // 전체길이를 초과하면    
+            if (ko_byte > max_length) {         
+                alert(max_length + " 글자 이상 입력할 수 없습니다. \n 초과된 내용은 자동으로 삭제 됩니다. ");
+                str2 = str.substr(0, max_length);         
+                reset_dttm.value = str2;     
+            }     
+            reset_dttm.focus();   
+        }
+    
+
+
+    function fnDelete(num){
+        // alert("test" + num);
+
+            if(confirm("삭제하시겠습니까?")){
+                let frm = $("#frm");
+                var urlTest = "/listT/"+num;
+                frm.attr("action", urlTest);
+                frm.submit();
+            }
+    }
+
+    
+
+
+    function fnInsert(){
+        if($("#result").val()=="N"){
+            alert("중복확인을 해주세요.");
+            return false;
+        }
+
+        if($.trim($("#grp_cd").val()) == '' || $.trim($("#grp_nm").val()) == '' || $.trim($("#start_date").val()) == '' || $.trim($("#limit_price").val()) == '' || $.trim($("#sms_price").val()) == '' || $.trim($("#lms_price").val()) == '' || $.trim($("#mms_price").val()) == '' || $.trim($("#reset_yn").val()) == '' || $.trim($("#reset_day").val()) == '' || $.trim($("#reset_price").val()) == '' || $.trim($("#reset_dttm").val()) == ''){
+            alert("필수값을 입력해주세요.");
+            return false;
+        }
+
+            if($.trim($("#limit_price").val()) ==''){
+                $("#limit_price").attr("name", "");
+            }
+            if($.trim($("#sms_price").val()) ==''){
+                $("#sms_price").attr("name", "");
+            }
+            if($.trim($("#lms_price").val()) ==''){
+                $("#lms_price").attr("name", "");
+            }
+            if($.trim($("#mms_price").val()) ==''){
+                $("#mms_price").attr("name", "");
+            }
+            if($.trim($("#reset_price").val()) ==''){
+                $("#reset_price").attr("name", "");
+            }
+            if(confirm("추가하시겠습니까??")){
+
+            let frm = $("#frm");
+            var url = "/insertThres";
+            frm.attr("action", url);
+            frm.submit();
+    }
+}
+    
+    
+</script>
+
+</html>
+<style>
+    .hr1{
+        background-color: #4e73df !important;
+    }
+
+</style>

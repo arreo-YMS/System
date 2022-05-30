@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>운영관리시스템</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<style>
+    table th{
+        text-align: center;
+        height: 50px;
+    }
+    
+</style>
+<link rel="shortcut icon" type="image/x-icon" href="img/stdtitle.jpg">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <th:block th:include="inc/nav"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <th:block th:include="inc/head"></th:block>
+
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        
+                        <!-- <h1 class="test">증액이력</h1> -->
+                        <div class="card-body">
+                            <h1 class="h3 mb-2 text-gray-800">제한금액 학인을 위한 기업정보 상세보기</h1>
+                            <hr class="hr1">
+                            <form id="frm"  method="post">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <!-- 제한금액 학인을 위한 기업정보 상세보기 -->
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>그룹코드</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="grp_cd" name="grp_cd" th:value="${dataT.grp_cd}" readonly>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>그룹명</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="grp_nm" name="grp_nm" th:value="${dataT.grp_nm}" placeholder="필수 입력값입니다.">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>시작일자</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="start_date" name="start_date" th:value="${dataT.start_date}" placeholder="필수 입력값입니다." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onkeyup="chkword2(this,8)">
+                                                </td>
+                                    </tr>
+                                        <tr>
+                                            <th>사용현황</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="used_yn" name="used_yn" th:value="${dataT.used_yn}" placeholder="필수 입력값입니다." oninput="handleOnInput(this)" onkeyup="chkword2(this,1)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <th>제한금액</th>
+                                            <td>
+                                                <input class="form-control" type="text" name="limit_price" id="limit_price" style="width: 50%; float: left;" th:value="${dataT.limit_price}" readonly>
+                                                <button type="button" class="btn btn-primary"  style="width: 6%; float:left" th:attr="onclick=|limitPricePlus()|">+</button>
+                                                <input class="form-control" type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" id="plus_price" name="plus_price" style="width: 50%; float: left;" placeholder="추가할 금액을 입력하신 후 우측 + 버튼을 눌러주세요." onkeyup="chkword2(this,12)">
+                                                <input type="hidden" id="result" value="N">
+                                                
+                                            </td>
+                                                
+                                        </tr>
+                                        <tr>
+                                            <th>sms단가</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="sms_price" name="sms_price" th:value="${dataT.sms_price}" placeholder="필수 입력값입니다." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>lms단가</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="lms_price" name="lms_price" th:value="${dataT.lms_price}" placeholder="필수 입력값입니다." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"> 
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>mms단가</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="mms_price" name="mms_price" th:value="${dataT.mms_price}" placeholder="필수 입력값입니다." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>알람발송 그룹분류</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="alarm_group" name="alarm_group" th:value="${dataT.alarm_group}" placeholder="선택 입력값입니다." onkeyup="chkword2(this,10)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>리셋기능</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="reset_yn" name="reset_yn" th:value="${dataT.reset_yn}" placeholder="필수 입력값입니다." onkeyup="chkword2(this,1)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>리셋일자</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="reset_day" name="reset_day" th:value="${dataT.reset_day}" placeholder="필수 입력값입니다." onkeyup="chkword2(this,2)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>리셋금액</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="reset_price" name="reset_price" th:value="${dataT.reset_price}" placeholder="필수 입력값입니다." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onkeyup="chkword2(this,12)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>리셋한날짜이력</th>
+                                                <td>
+                                                    <input class="form-control" type="text" id="reset_dttm" name="reset_dttm" th:value="${dataT.reset_dttm}" placeholder="필수 입력값입니다." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onkeyup="chkword2(this,14)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                                <td>
+                                                    <!-- <button type="button" class="btn btn-danger" th:attr="onclick=|fnDelete('${dataT.grp_cd}')|">DELETE</button> -->
+                                                    <button type="button" id="save" class="btn btn-primary" th:attr="onclick=|fnUpdate('${dataT.grp_cd}')|">SAVE</button>
+                                                    <!-- <button type="button" class="btn btn-warning" th:attr="onclick=|arrTest()|">TEST</button> -->
+                                                </td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                    <input type="hidden" id="plusAry" name="plusAry">
+                                    <input type="hidden" name="empNm" th:value="${session.userVO.EMP_NM}" >
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <th:block th:include="inc/footer"></th:block>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    
+
+</body>
+
+<script th:inline="javascript">
+
+
+    function fnUpdate(num){
+
+    if(confirm("저장하시겠습니까??")){
+        if($.trim($("#grp_cd").val()) == '' || 
+        $.trim($("#grp_nm").val()) == '' || 
+        $.trim($("#start_date").val()) == '' || 
+        $.trim($("#used_yn").val()) == '' || 
+        $.trim($("#limit_price").val()) == '' || 
+        $.trim($("#sms_price").val()) == '' || 
+        $.trim($("#lms_price").val()) == '' || 
+        $.trim($("#mms_price").val()) == '' || 
+        $.trim($("#reset_day").val()) == '' || 
+        $.trim($("#reset_price").val()) == '' || 
+        $.trim($("#reset_dttm").val()) == ''){
+            alert("필수값을 입력해주세요.");
+            return false;
+        }
+        let frm = $("#frm");
+        var url = "/updateThresHold/"+num;
+        frm.attr("action", url);
+        frm.submit();
+    }
+}
+
+
+function handleOnInput(e)  {
+  e.value = e.value.replace(/[^A-Za-z]/ig, '')
+}
+
+
+    var plus_stack = [];
+    var empNm_stack = [];
+    
+
+    function limitPricePlus() {
+        
+
+        if($.trim($("#plus_price").val())==''){
+            alert("추가할 금액을 먼저 입력해주세요.");
+            return false;
+        }
+
+        if(confirm($("#plus_price").val() +"원을 추가하시겠습니까?")){
+            alert("추가되었습니다.");
+        }else{
+            alert("취소되었습니다.");
+            return false;
+        }
+
+        
+
+        let price = $("#limit_price").val();
+        let plusPrice = $("#plus_price").val();
+        let plusAry = $("#plusAry").val();
+        let empNm = $("#empNm").val();
+
+        
+
+        plus_stack.push(plusPrice);
+        empNm_stack.push(empNm);
+
+
+        if(plusAry == ""){
+            $("#plusAry").val(plusPrice);
+        }else{
+            $("#plusAry").val(plusAry+","+plusPrice);
+        }
+
+
+        var total = parseInt(price) + parseInt(plusPrice);
+        var total2 = String(empNm);
+
+
+        $("#limit_price").val(total);
+        $("#empNm").val(total2);
+
+    }
+
+    function chkword2(reset_dttm, maxlength) {     
+        var str = reset_dttm.value; // 이벤트가 일어난 컨트롤의 value 값     
+        var str_length = str.length; // 전체길이       
+        // 변수초기화    
+        var max_length = maxlength; // 제한할 글자수 크기     
+        var i = 0; // for문에 사용     
+        var ko_byte = 0; // 한글일경우는 2 그밗에는 1을 더함    
+        var li_len = 0; // substring하기 위해서 사용     
+        var one_char = ""; // 한글자씩 검사한다     
+        var str2 = ""; // 글자수를 초과하면 제한할수 글자전까지만 보여준다.       
+        for (i = 0; i < str_length; i++) {         
+            // 한글자추출         
+            one_char = str.charAt(i);             
+            ko_byte++;         }           
+            // 전체 크기가 max_length를 넘지않으면         
+            if (ko_byte <= max_length) {             
+                li_len = i + 1;         
+            }            
+            // 전체길이를 초과하면    
+            if (ko_byte > max_length) {         
+                alert(max_length + " 글자 이상 입력할 수 없습니다. \n 초과된 내용은 자동으로 삭제 됩니다. ");
+                str2 = str.substr(0, max_length);         
+                reset_dttm.value = str2;     
+            }     
+            reset_dttm.focus();   
+        }
+
+</script>
+
+</html>
+<style>
+    .hr1{
+        background-color: #4e73df !important;
+    }
+
+</style>

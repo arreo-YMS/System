@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>운영관리시스템</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<style>
+    table th{
+        text-align: center !important;
+    }
+</style>
+<link rel="shortcut icon" type="image/x-icon" href="img/stdtitle.jpg">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <th:block th:include="inc/nav"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <th:block th:include="inc/head"></th:block>
+
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        
+                        <!-- <h1 class="test">증액이력</h1> -->
+                        <div class="card-body">
+                            <h1 class="h3 mb-2 text-gray-800">원격접속현황 상세보기 사용안함</h1>
+                            <form id="frm"  method="post">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <!-- 원격접속현황 상세보기 -->
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>아이디(키)</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="key" th:value="${dataRS.key}" readonly>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>이름</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="name" th:value="${dataRS.name}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>이메일</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="email" th:value="${dataRS.email}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>사용상태</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="status" th:value="${dataRS.status}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>서버IP</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="server_ip" th:value="${dataRS.server_ip}" readonly>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>사용자</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="server_user" th:value="${dataRS.server_user}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>사용이유</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="reason" th:value="${dataRS.reason}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>사용일자</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="date" th:value="${dataRS.date}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>시작시간</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="start_time" th:value="${dataRS.start_time}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>종료시간</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="end_time" th:value="${dataRS.end_time}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>원격신청IP주소</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="create_ip" th:value="${dataRS.create_ip}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>원격신청시간</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="create_dttm" th:value="${dataRS.create_dttm}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>접속 승인자</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="update_admin" th:value="${dataRS.update_admin}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>접속 승인일시</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="update_dttm" th:value="${dataRS.update_dttm}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>핸드폰 번호</th>
+                                                <td>
+                                                    <input class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" type="text" name="phn_id" th:value="${dataRS.phn_id}" onkeyup="chkword(this,11)" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>알람유형</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="alarm_type" th:value="${dataRS.alarm_type}" >
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger" th:attr="onclick=|fnDelete('${dataRS.key}')|">DELETE</button>
+                                                    <button type="button" class="btn btn-primary" th:attr="onclick=|fnUpdate('${dataRS.key}')|">SAVE</button>
+                                                </td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; STANDARDNETWORKS</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    
+
+</body>
+
+<script th:inline="javascript">
+    function fnDelete(num){
+        // alert("test" + num);
+
+            if(confirm("삭제하시겠습니까?")){
+                let frm = $("#frm");
+                var urlTest = "/listRS/"+num;
+                frm.attr("action", urlTest);
+                frm.submit();
+            }
+    }
+
+    function fnUpdate(num){
+        if(confirm("저장하시겠습니까??")){
+            let frm = $("#frm");
+            var url = "/updateRemoteStatus/"+num;
+            frm.attr("action", url);
+            frm.submit();
+        }
+    }
+
+    function chkword(phn_id, maxlength) {     
+        var str = phn_id.value; // 이벤트가 일어난 컨트롤의 value 값     
+        var str_length = str.length; // 전체길이       
+        // 변수초기화    
+        var max_length = maxlength; // 제한할 글자수 크기     
+        var i = 0; // for문에 사용     
+        var ko_byte = 0; // 한글일경우는 2 그밗에는 1을 더함    
+        var li_len = 0; // substring하기 위해서 사용     
+        var one_char = ""; // 한글자씩 검사한다     
+        var str2 = ""; // 글자수를 초과하면 제한할수 글자전까지만 보여준다.       
+        for (i = 0; i < str_length; i++) {         
+            // 한글자추출         
+            one_char = str.charAt(i);             
+            ko_byte++;         }           
+            // 전체 크기가 max_length를 넘지않으면         
+            if (ko_byte <= max_length) {             
+                li_len = i + 1;         
+            }            
+            // 전체길이를 초과하면    
+            if (ko_byte > max_length) {         
+                alert(max_length + " 글자 이상 입력할 수 없습니다. \n 초과된 내용은 자동으로 삭제 됩니다. ");
+                str2 = str.substr(0, max_length);         
+                phn_id.value = str2;     
+            }     
+            phn_id.focus();   
+        }
+
+    
+
+</script>
+
+</html>

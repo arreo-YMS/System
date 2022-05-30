@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>운영관리시스템</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+         #insertBtn{
+            margin-bottom: 5px;
+            width: 100% !important;
+            padding: 10px 18px 10px 18px;
+        }
+        .hr1{
+        background-color: #4e73df !important;
+    }
+    table th{
+        white-space: nowrap;
+    }
+    table td{
+        white-space: nowrap;
+    }
+
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="img/stdtitle.jpg">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <th:block th:include="inc/nav"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <th:block th:include="inc/head"></th:block>
+
+                    
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        
+                        <!-- <h1 class="test">thresHold</h1> -->
+                        <div class="card-body">
+                            <div style="height: 40px;">
+                            <h4 class="h4 mb-2 text-gray-800">제한금액 확인 위한 기업정보</h4>
+                            </div>
+                            <form th:action="@{/thresHold}" method="get">
+                                <input type="text" name="grp_cd" class="form-control" id="grp_cd" placeholder="그룹코드로 검색하세요." size="50" style="width: 500px; float: left;">
+                                <button type="submit" class="btn btn-info">search</button>
+                                <hr class="hr1">
+                            </form>
+                            <form id="frm"  method="post">
+                            <div class="table-responsive">
+                                <div><button type="button" class="btn btn-primary" onclick="location.href='insertThresHold' " id="insertBtn">CREATE</button></div>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>그룹코드</th>
+                                            <th>그룹명</th>
+                                            <th>시작일자</th>
+                                            <th>사용현황</th>
+                                            <th>제한금액</th>
+                                            <th>sms단가</th>
+                                            <th>lms단가</th>
+                                            <th>mms단가</th>
+                                            <th>알람발송</th>
+                                            <th>리셋기능</th>
+                                            <th>리셋일자 지정</th>
+                                            <th>리셋금액 지정</th>
+                                            <th>리셋날짜 이력</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+                                            <tr th:each="thresHold : ${allThresHold}" >
+                                                <td><a th:href="@{/editThresHold( grp_cd=${thresHold.grp_cd} )}" th:value="${thresHold.grp_cd}" th:text="${thresHold.grp_cd}"></a></td>
+                                                <td><span th:text="${thresHold.grp_nm}"></span></td>
+                                                <td><span th:text="${thresHold.start_date}"></span></td>
+                                                <td><span th:text="${thresHold.used_yn}"></span></td>
+                                                <!-- <td><span th:text="${thresHold.limit_price}"></span></td> -->
+                                                <td th:text="${#numbers.formatInteger(thresHold.limit_price, 0, 'COMMA')}"></td>
+                                                <td><span th:text="${thresHold.sms_price}"></span></td>
+                                                <td><span th:text="${thresHold.lms_price}"></span></td>
+                                                <td><span th:text="${thresHold.mms_price}"></span></td>
+                                                <td><span th:text="${thresHold.alarm_group}"></span></td>
+                                                <td><span th:text="${thresHold.reset_yn}"></span></td>
+                                                <td><span th:text="${thresHold.reset_day}"></span></td>
+                                                <td><span th:text="${thresHold.reset_price}"></span></td>
+                                                <td><span th:text="${thresHold.reset_dttm}"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                                <div th:if="${!allThresHold.isEmpty()}">
+                                    <nav
+                                        th:with="
+                                            pageNumber = ${allThresHold.pageable.pageNumber},
+                                            pageSize = ${allThresHold.pageable.pageSize},
+                                            totalPages = ${allThresHold.totalPages},
+                                            startPage = ${T(Math).floor(pageNumber / pageSize) * pageSize + 1},
+                                            tempEndPage = ${startPage + pageSize - 1},
+                                            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+                                            aria-lable="page navigation"
+                                            >
+                                            <ul class="pagination ">
+                                                <li th:classappend="${pageNumber < pageSize} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="@{/thresHold(page=0, grp_cd=${thresHoldSearchGrpCd})}">
+                                                      <span>&laquo;</span>
+                                                      <span class="sr-only">First</span>
+                                                    </a>
+                                                  </li>
+                                                  <li th:classappend="${allThresHold.first} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="${allThresHold.first} ? '#' : @{/thresHold(page=${pageNumber - 1}, grp_cd=${thresHoldSearchGrpCd})}" aria-label="Previous">
+                                                      <span aria-hidden="true">&lt;</span>
+                                                      <span class="sr-only">Previous</span>
+                                                    </a>
+                                                  </li>
+                                                  <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+                                                    <a th:text="${page}" class="page-link" th:href="@{/thresHold(page=${page - 1}, grp_cd=${thresHoldSearchGrpCd})}"></a>
+                                                  </li>
+                                                  <li th:classappend="${allThresHold.last} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="${allThresHold.last} ? '#' : @{/thresHold(page=${pageNumber + 1}, grp_cd=${thresHoldSearchGrpCd})}" aria-label="Next">
+                                                      <span aria-hidden="true">&gt;</span>
+                                                      <span class="sr-only">Next</span>
+                                                    </a>
+                                                  </li>
+                                                  <li th:classappend=" ${T(Math).floor(totalPages / pageSize) * pageSize - 1 <= startPage} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="@{/thresHold(page=${totalPages - 1}, grp_cd=${thresHoldSearchGrpCd})}">
+                                                      <span>&raquo;</span>
+                                                      <span class="sr-only">Last</span>
+                                                    </a>
+                                                  </li>
+                                            </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <th:block th:include="inc/footer"></th:block>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+    
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+</body>
+</html>

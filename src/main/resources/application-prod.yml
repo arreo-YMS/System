@@ -1,0 +1,119 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    vendor:
+      database: [postgresql, oracle]
+
+  
+ 
+
+
+
+#실제 DB 접속정보
+primary:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://119.207.74.22:5432/mnt
+    username: monitor
+    password: arreo
+  hibernate:
+    hbm2ddl:
+      auto: none
+  database-platform: org.hibernate.dialect.PostgreSQLDialect 
+
+
+
+#실제 DB 접속정보
+secondary:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@218.233.240.43:1522/INFODB
+    username: smsmt
+    password: arreo_smsmt
+  hibernate:
+    hbm2ddl:
+      auto: none
+  database-platform: org.hibernate.dialect.Oracle10gDialect
+
+
+#실제 DB 접속정보
+tertiary:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@119.207.74.18:1521/XDB
+    username: sms
+    password: arreomagma
+  hibernate:
+    hbm2ddl:
+      auto: none
+  database-platform: org.hibernate.dialect.Oracle10gDialect
+        
+
+#실제 DB 접속정보
+# quaternary:
+#   datasource:
+#     driver-class-name: oracle.jdbc.OracleDriver
+#     url: jdbc:oracle:thin:@218.233.240.43:1523/MCDB
+#     username: mmsmt
+#     password: arreo_mmsmt
+#   hibernate:
+#     hbm2ddl:
+#       auto: none119.207.
+#   database-platform: org.hibernate.dialect.Oracle10gDialect
+
+quaternary:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@119.207.74.30:1521/HDB
+    username: smsmt
+    password: arreo_smsmt01
+  hibernate:
+    hbm2ddl:
+      auto: none
+  database-platform: org.hibernate.dialect.Oracle10gDialect
+
+
+quaternary2:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@119.207.74.30:1521/HDB
+    username: mmsmt
+    password: arreo_mmsmt01
+  hibernate:
+    hbm2ddl:
+      auto: none
+  database-platform: org.hibernate.dialect.Oracle10gDialect
+
+#실제 DB 접속정보
+quinary:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@121.125.79.19:1521/aiwsdb
+    username: aiwsdba
+    password: egarreo01
+  hibernate:
+    hbm2ddl:
+      auto: none
+  database-platform: org.hibernate.dialect.Oracle10gDialect

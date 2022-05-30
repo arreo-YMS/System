@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>운영관리시스템</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        #insertBtn{
+            margin-bottom: 5px;
+            width: 100% !important;
+            padding: 10px 18px 10px 18px;
+        }
+        .hr1{
+        background-color: #4e73df !important;
+    }
+    table th{
+        white-space: nowrap;
+    }
+    table td{
+        white-space: nowrap;
+    }
+
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="img/stdtitle.jpg">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <th:block th:include="inc/nav"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <th:block th:include="inc/head"></th:block>
+
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        
+                        <!-- <h1 class="test">증액이력</h1> -->
+                        <div class="card-body">
+                            <h4 class="h4 mb-2 text-gray-800">SMS, LMS 건수 제한</h4>
+                            <form th:action="@{/cmmThresHold}" method="get">
+                                <input type="text" name="mbrId" class="form-control" id="mbrId" placeholder="아이디로 검색하세요." size="50" style="width: 500px; float: left;">
+                                <button type="submit" class="btn btn-info">search</button>
+                                <hr class="hr1">
+                            </form>
+                            <form id="frm"  method="post">
+                            <div class="table-responsive">
+                                <button type="button" class="btn btn-primary" onclick="location.href='insertCmmThres' " id="insertBtn">CREATE</button>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    
+                                    <thead>
+                                        <tr>
+                                            <th>아이디</th>
+                                            <th>메세지타입</th>
+                                            <th>그룹코드</th>
+                                            <th>제한건수(시)</th>
+                                            <th>제한건수(일)</th>
+                                            <th>제한건수(월)</th>
+                                            <th>삭제플래그</th>
+                                            <th>수정날짜</th>
+                                            <th>ADT아이디</th>
+                                            <th>누적제한</th>
+                                            <th>전체제한건수</th>
+                                            <th>누적건수모드</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+                                            <tr th:each="cmm : ${allCmmThresHold}" >
+                                                <td><a th:href="@{/editCmmThresHold( mbrId=${cmm.mbrId} )}" th:value="${cmm.mbrId}" th:text="${cmm.mbrId}"></a></td>
+                                                <td><a th:text="${cmm.msgType}"></a></td>
+                                                <td><a th:text="${cmm.grpCd}"></a></td>
+                                                <td th:text="${#numbers.formatInteger(cmm.tCnt, 0, 'COMMA')}"></td>
+                                                <td th:text="${#numbers.formatInteger(cmm.dCnt, 0, 'COMMA')}"></td>
+                                                <td th:text="${#numbers.formatInteger(cmm.mCnt, 0, 'COMMA')}"></td>
+                                                <td><a th:text="${cmm.delYn}"></a></td>
+                                                <td><a th:text="${cmm.upt}"></a></td>
+                                                <td><a th:text="${cmm.adtId}"></a></td>
+                                                <td th:text="${#numbers.formatInteger(cmm.aCnt, 0, 'COMMA')}"></td>
+                                                <td><a th:text="${cmm.aReset}"></a></td>
+                                                <td><a th:text="${cmm.limitMode}"></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                                <div th:if="${!allCmmThresHold.isEmpty()}">
+                                    <nav
+                                        th:with="
+                                            pageNumber = ${allCmmThresHold.pageable.pageNumber},
+                                            pageSize = ${allCmmThresHold.pageable.pageSize},
+                                            totalPages = ${allCmmThresHold.totalPages},
+                                            startPage = ${T(Math).floor(pageNumber / pageSize) * pageSize + 1},
+                                            tempEndPage = ${startPage + pageSize - 1},
+                                            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+                                            aria-lable="page navigation"
+                                            >
+                                            <ul class="pagination ">
+                                                <li th:classappend="${pageNumber < pageSize} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="@{/cmmThresHold(page=0, mbrId=${cmmThresHoldSearchMbrId})}">
+                                                      <span>&laquo;</span>
+                                                      <span class="sr-only">First</span>
+                                                    </a>
+                                                  </li>
+                                                  <li th:classappend="${allCmmThresHold.first} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="${allCmmThresHold.first} ? '#' : @{/cmmThresHold(page=${pageNumber - 1}, mbrId=${cmmThresHoldSearchMbrId})}" aria-label="Previous">
+                                                      <span aria-hidden="true">&lt;</span>
+                                                      <span class="sr-only">Previous</span>
+                                                    </a>
+                                                  </li>
+                                                  <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+                                                    <a th:text="${page}" class="page-link" th:href="@{/cmmThresHold(page=${page - 1}, mbrId=${cmmThresHoldSearchMbrId})}"></a>
+                                                  </li>
+                                                  <li th:classappend="${allCmmThresHold.last} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="${allCmmThresHold.last} ? '#' : @{/cmmThresHold(page=${pageNumber + 1}, mbrId=${cmmThresHoldSearchMbrId})}" aria-label="Next">
+                                                      <span aria-hidden="true">&gt;</span>
+                                                      <span class="sr-only">Next</span>
+                                                    </a>
+                                                  </li>
+                                                  <li th:classappend=" ${T(Math).floor(totalPages / pageSize) * pageSize - 1 <= startPage} ? 'disabled'" class="page-item">
+                                                    <a class="page-link" th:href="@{/cmmThresHold(page=${totalPages - 1}, mbrId=${cmmThresHoldSearchMbrId})}">
+                                                      <span>&raquo;</span>
+                                                      <span class="sr-only">Last</span>
+                                                    </a>
+                                                  </li>
+                                            </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h5>*건수제한 수정 및 추가는 반드시 결재문서 기안 후 운영팀 의견 받은 내용으로 수정하시길 바립니다.</h5>  
+                  </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <th:block th:include="inc/footer"></th:block>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+   
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+</body>
+</html>

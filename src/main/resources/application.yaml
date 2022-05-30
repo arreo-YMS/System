@@ -1,0 +1,76 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+
+
+
+#테스트 DB 접속정보
+primary:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/omt
+    username: arreokwon
+    password: arreokwon
+
+
+
+
+#테스트 DB 접속정보
+secondary:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1522/xe
+    username: oracle2
+    password: 1234
+
+
+
+#테스트 DB 접속정보
+tertiary:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: oracle1
+    password: 1234
+
+        
+#테스트 DB 접속정보
+quaternary:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1523/xe
+    username: oracle3
+    password: 1234 
+
+
+quaternary2:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1523/xe
+    username: oracle3
+    password: 1234 
+
+
+#실제 DB 접속정보
+quinary:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@121.125.79.19:1521/aiwsdb
+    username: aiwsdba
+    password: egarreo01

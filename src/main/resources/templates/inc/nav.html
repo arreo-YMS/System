@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <nav th:fragment="commonFooter">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+
+    
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/increaseH?grp_cd=null">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">운영관리시스템</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <!-- <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li> -->
+
+    
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <!-- <div class="sidebar-heading">
+        Addons
+    </div> -->
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#increase"
+            aria-expanded="true" aria-controls="increase">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>증액관련</span>
+        </a>
+        <div id="increase" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <div title="증액이력을 확인하는 메뉴입니다."><a class="collapse-item" href="/increaseH?grp_cd=null">증액이력</a></div>
+                <div title="기업정보와 제한금액을 설정하는 메뉴입니다."><a class="collapse-item" href="/thresHold?grp_cd=null">기업정보(제한금액)</a></div>
+                <div title="1분간격으로 현재상태가 갱신되는 메뉴입니다."><a class="collapse-item" href="/limitStatus?grp_cd=null">현재사용량</a></div>
+                
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#remote"
+            aria-expanded="true" aria-controls="remote">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>원격관련</span>
+        </a>
+        <div id="remote" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <div title="원격접속이 차단된 유저 목록입니다."><a class="collapse-item" href="/blockUser?server_user=null">원격접속차단유저</a></div>
+                <div title="원격접속 계정 현황입니다."><a class="collapse-item" href="/serverList?server_user=null">원격접속계정현황</a></div>
+                <div title="원격접속 가능한 인원 현황입니다."><a class="collapse-item" href="/remoteUserList?name=null">원격접속가능인원현황</a></div>
+                <div title="현재 사용중인 원격접속 현황입니다."><a class="collapse-item" href="/remoteStatus?name=null">원격접속현황</a></div>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#arreomagma"
+            aria-expanded="true" aria-controls="arreomagma">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>라우팅 및 인증코드</span>
+        </a>
+        <div id="arreomagma" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <div title="라우팅 및 인증코드를 수정할 수 있는 메뉴입니다."><a class="collapse-item" href="/cmmCdauth?mbrId=null">라우팅 및 인증코드</a></div>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#lowdata"
+            aria-expanded="true" aria-controls="lowdata">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>로우데이터</span>
+        </a>
+        <div id="lowdata" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <div title="SMS로우데이터를 확인할 수 있습니다."><a class="collapse-item" href="#" onclick="alert('서비스 준비중입니다.');return false;">SMS로우데이터</a></div>
+                <div title="MMS로우데이터를 확인할 수 있습니다."><a class="collapse-item" href="#" onclick="alert('서비스 준비중입니다.');return false;">MMS로우데이터</a></div>
+                <!-- <div title="SMS로우데이터를 확인할 수 있습니다."><a class="collapse-item" href="/smsCmpH?MSG_ID=null">SMS로우데이터</a></div> -->
+                <!-- <div title="MMS로우데이터를 확인할 수 있습니다."><a class="collapse-item" href="/mmsCmpH?MSG_ID=null">MMS로우데이터</a></div> -->
+            </div>
+        </div>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#smsLimit"
+            aria-expanded="true" aria-controls="smsLimit">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>건수제한</span>
+        </a>
+        <div id="smsLimit" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <div title="SMS,LMS 건수제한 등을 설정하는 메뉴입니다."><a class="collapse-item" href="/cmmThresHold?mbrId=null">SMS,LMS건수제한</a></div>
+                <!-- <a class="collapse-item" href="/lmsLimit">LMS건수제한</a> -->
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+</nav>
+
+
+</html>

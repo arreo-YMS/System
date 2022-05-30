@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>운영관리시스템</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        table th{
+            text-align: center !important;
+        }
+
+        select {
+            width: 150px;
+            height: 30px;
+            padding-left: 5px;
+            font-size: 15px;
+            color:gray;
+            border: 1px solid gray;
+            border-radius: 3px;
+        }
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="img/stdtitle.jpg">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <th:block th:include="inc/nav"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <th:block th:include="inc/head"></th:block>
+                
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        
+                        <!-- <h1 class="test">증액이력</h1> -->
+                        <div class="card-body">
+                            <h1 class="h3 mb-2 text-gray-800">제한금액 확인을 위한 기업정보 추가</h1>
+                            <hr class="hr1">
+                            <form id="frm"  method="post">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                       <!-- 제한금액 확인을 위한 기업정보 추가 -->
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>아이디</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="mbrId" id="mbrId" placeholder="MBRID를 입력해주세요.(필수)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>메세지타입</th>
+                                                <td>
+                                                    <select name="msgType">
+                                                        <option value="S">S:SMS</option>
+                                                        <option value="L">L:LMS</option>
+                                                        <option value="M">M:MMS</option>
+                                                        <option value="K">K:KKO</option>
+                                                    </select>
+                                                    <!-- <input class="form-control" type="text" name="msgType" id="msgType" placeholder="메시지 타입을 입력해주세요.(필수)"> -->
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>그룹코드</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="grpCd" id="grpCd" placeholder="그룹코드를 입력해주세요.">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>제한건수(시)</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="tCnt" id="tCnt"  placeholder="입력하지 않을시 기본값(2147483647)이 자동 입력됩니다.">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>제한건수(일)</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="dCnt" id="dCnt"  placeholder="입력하지 않을시 기본값(2147483647)이 자동 입력됩니다.">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>제한건수(월)</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="mCnt" id="mCnt" placeholder="입력하지 않을시 기본값(2147483647)이 자동 입력됩니다.">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>삭제플래그</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="delYn" id="delYn" placeholder="입력하지 않을시 기본값(N)이 자동 입력됩니다." oninput="handleOnInput(this)" onkeyup="chkword(this,1)">
+                                                </td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <th>수정날짜</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="upt" id="upt" placeholder="수정된 날짜를 입력해주세요.(ex-202201011210)">
+                                                </td>
+                                        </tr> -->
+                                        <tr>
+                                            <th>ADT아이디</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="adtId" id="adtId" placeholder="ADT고유 아이디를 입력해주세요(필수)">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <th>누적제한</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="aCnt" id="aCnt" placeholder="입력하지 않을시 기본값(2147483647)이 자동 입력됩니다.">
+                                                </td>
+                                            </tr>
+                                        <tr>
+                                            <th>전체제한건수</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="aReset" id="aReset" placeholder="입력하지 않을시 기본값(N)이 자동 입력됩니다." onkeyup="chkword(this,1)">
+                                                </td>
+                                            </tr>
+                                        <tr>
+                                            <th>누적건수모드</th>
+                                                <td>
+                                                    <input class="form-control" type="text" name="limitMode" id="limitMode" placeholder="입력하지 않을시 기본값(T)이 자동 입력됩니다." onkeyup="chkword(this,1)">
+                                                </td>
+                                            </tr>
+                                        <tr>
+                                            <th></th>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" th:attr="onclick=|fnInsert()|">SAVE</button>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <th:block th:include="inc/footer"></th:block>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    
+
+</body>
+
+<script th:inline="javascript">
+    // function fnDelete(num){
+    //     // alert("test" + num);
+
+    //         if(confirm("삭제하시겠습니까?")){
+    //             let frm = $("#frm");
+    //             var urlTest = "/listT/"+num;
+    //             frm.attr("action", urlTest);
+    //             frm.submit();
+    //         }
+    // }
+
+    function fnInsert(){
+        if(confirm("추가하시겠습니까??")){
+            if($.trim($("#mbrId").val()) == '' || $.trim($("#adtId").val()) == ''){
+                alert("필수값을 입력해주세요.");
+                return false;
+            }
+
+            if($.trim($("#tCnt").val()) ==''){
+                $("#tCnt").attr("name", "");
+            }
+            if($.trim($("#aCnt").val()) ==''){
+                $("#aCnt").attr("name", "");
+            }
+
+            if($.trim($("#dCnt").val()) ==''){
+                $("#dCnt").attr("name", "");
+            }
+            if($.trim($("#mCnt").val()) ==''){
+                $("#mCnt").attr("name", "");
+            }
+            if($.trim($("#delYn").val()) ==''){
+                $("#delYn").attr("name", "");
+            }
+            if($.trim($("#aReset").val()) ==''){
+                $("#aReset").attr("name", "");
+            }
+            if($.trim($("#limitMode").val()) ==''){
+                $("#limitMode").attr("name", "");
+            }
+            
+
+            let frm = $("#frm");
+            var url = "/insertCmmThres";
+            frm.attr("action", url);
+            frm.submit();
+        }
+    }
+
+    
+    function chkword(limitMode, maxlength) {     
+        var str = limitMode.value; // 이벤트가 일어난 컨트롤의 value 값     
+        var str_length = str.length; // 전체길이       
+        // 변수초기화    
+        var max_length = maxlength; // 제한할 글자수 크기     
+        var i = 0; // for문에 사용     
+        var ko_byte = 0; // 한글일경우는 2 그밗에는 1을 더함    
+        var li_len = 0; // substring하기 위해서 사용     
+        var one_char = ""; // 한글자씩 검사한다     
+        var str2 = ""; // 글자수를 초과하면 제한할수 글자전까지만 보여준다.       
+        for (i = 0; i < str_length; i++) {         
+            // 한글자추출         
+            one_char = str.charAt(i);             
+            ko_byte++;         }           
+            // 전체 크기가 max_length를 넘지않으면         
+            if (ko_byte <= max_length) {             
+                li_len = i + 1;         
+            }            
+            // 전체길이를 초과하면    
+            if (ko_byte > max_length) {         
+                alert(max_length + " 글자 이상 입력할 수 없습니다. \n 초과된 내용은 자동으로 삭제 됩니다. ");
+                str2 = str.substr(0, max_length);         
+                limitMode.value = str2;     
+            }     
+            limitMode.focus();   
+        }
+
+        function handleOnInput(e)  {
+  e.value = e.value.replace(/[^A-Za-z]/ig, '')
+}
+
+</script>
+
+</html>
+<style>
+    .hr1{
+        background-color: #4e73df !important;
+    }
+
+</style>
